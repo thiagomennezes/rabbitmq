@@ -1,0 +1,40 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    container_name: rabbitmq-develop
+    hostname: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/start.sh:/usr/local/bin/start.sh:ro
+    secrets:
+      - rabbitmq_admin_password
+      - rabbitmq_user_password
+      - source: rabbitmq_erlang_cookie
+        target: /var/lib/rabbitmq/.erlang.cookie
+        mode: 0600
+    environment:
+      RABBITMQ_NODENAME: rabbit@rabbitmq
+      RABBITMQ_DEFAULT_VHOST: specialvhost
+      RABBITMQ_DEFAULT_USER: magicadmin
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    command: ["/bin/sh", "/usr/local/bin/start.sh"]
+
+volumes:
+  rabbitmq_data:
+
+secrets:
+  rabbitmq_admin_password:
+    file: ./secrets/rabbitmq_admin_password.txt
+  rabbitmq_user_password:
+    file: ./secrets/rabbitmq_user_password.txt
+  rabbitmq_erlang_cookie:
+    file: ./secrets/rabbitmq_erlang_cookie.txt

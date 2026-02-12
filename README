@@ -1,0 +1,4 @@
+Run these commands:
+
+openssl rand -hex 32 > secrets/rabbitmq_erlang_cookie.txt
+chmod 600 secrets/*.txt
