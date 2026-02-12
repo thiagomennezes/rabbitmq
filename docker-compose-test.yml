@@ -5,8 +5,8 @@ services:
     hostname: rabbitmq
     restart: unless-stopped
     ports:
-      - "7672:5672"
-      - "7673:15672"
+      - "8672:5672"
+      - "8673:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
