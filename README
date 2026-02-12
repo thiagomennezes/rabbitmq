@@ -1,4 +1,5 @@
 Run these commands:
 
+chmod +x rabbitmq/start.sh
 openssl rand -hex 32 > secrets/rabbitmq_erlang_cookie.txt
 chmod 600 secrets/*.txt
