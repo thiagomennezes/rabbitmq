@@ -13,7 +13,7 @@ services:
       - ./rabbitmq/start.sh:/usr/local/bin/start.sh:ro
     secrets:
       - rabbitmq_admin_password
-      - rabbitmq_user_password
+      - rabbitmq_system_user_password
       - source: rabbitmq_erlang_cookie
         target: /var/lib/rabbitmq/.erlang.cookie
         mode: 0600
@@ -34,7 +34,7 @@ volumes:
 secrets:
   rabbitmq_admin_password:
     file: ./secrets/rabbitmq_admin_password.txt
-  rabbitmq_user_password:
-    file: ./secrets/rabbitmq_user_password.txt
+  rabbitmq_system_user_password:
+    file: ./secrets/rabbitmq_system_user_password.txt
   rabbitmq_erlang_cookie:
     file: ./secrets/rabbitmq_erlang_cookie.txt
